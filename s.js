@@ -14,9 +14,9 @@ const                              choice_nars =  [ Red, Yellow, ascend_Green, a
 function                             choice(o, s) { s.o[s.a++] = s.o[s.s++],
                                                     s.o[s.a++] = s.t,
                                                     s.o[s.a++] = s.r,
-                                                    s.o[s.a++] = s.s,
+                                                    s.o[s.a++] = s.s + 1,
                                                     s.o[s.a++] = or_nars.indexOf(choose),
-                                                    s.data_states.push(o)
+                                                    s.data_states.push(o),
                                                     choice_nars[s.o[s.s++]]({...o}, s); }
 // books of ascending
 function                         ascend_Red(o, s) { s.t = s.o[s.r + 1], s.r = s.o[s.r],   Red(o, s); }

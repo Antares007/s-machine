@@ -2,7 +2,7 @@ import {PinkΤRed_descend, and, or} from './s.js'
 class Programmer {
   constructor(o, s) {
     this.o = o;
-    this.pro_grammar = { o: s, t: 0, a: 0, r: 0, s: s.length, symbols: [], axioms: [], data_states: [], stack: [] };
+    this.pro_grammar = { o: s, t: 0, a: 0, r: 0, s: s.length, symbols: [], axioms: [], data_states: [] };
   }
   DBT(opcode, symbol, set) {
     var { o, a } = this.pro_grammar;
@@ -17,11 +17,11 @@ class Programmer {
   go() { PinkΤRed_descend(this.o, this.pro_grammar) }
 }
 
-new Programmer({ b: 0, expr: Array(4) }, new Int16Array(2048))
-  .D("S").T("expression").B(equalsTo(5)).B(print_expr).B(print_tree).B((o,s) => setTimeout(() => and(o,s), 0))
-  .D("constant").B(term("1")).B(op_const(1)).B(ast_const(1))
-  .D("constant").B(term("2")).B(op_const(2)).B(ast_const(2))
-  .D("constant").B(term("3")).B(op_const(3)).B(ast_const(3))
+new Programmer({ b: 0, expr: Array(10) }, new Int16Array(2048))
+  .D("S").T("expression").B(term("=")).T("expression").B(op_binary((a,b) => a - b)).B(ast_binary("=")).B(equalsTo(0)).B(print_expr).B(print_tree).B((o,s) => setTimeout(() => and(o,s), 0))
+  .D("constant").B(term("x")).B(op_const(1)).B(ast_const(1))
+  .D("constant").B(term("2x")).B(op_const(2)).B(ast_const(2))
+  .D("constant").B(term("3x")).B(op_const(3)).B(ast_const(3))
   .D("primary").T("constant")
   .D("primary").B(term("(")).T("expression"). B(term(")"))
   .D("unary").T("primary")
@@ -38,7 +38,7 @@ new Programmer({ b: 0, expr: Array(4) }, new Int16Array(2048))
 
 import astToString from './ast2asciitree.js'
 
-function print_expr (o,s) { return (console.log(o.expr.slice(0, o.b).join("").padStart(o.expr.length), "=", o.rez[0]), and(o,s)) }
+function print_expr (o,s) { return (console.log(o.expr.slice(0, o.b).join("").padStart(o.expr.length)), and(o,s)) }
 function print_tree (o,s) { return (console.log(astToString(o.ast[0])), and(o,s)) }
 function term (str) { return (o,s) => setImmediate(() => (o.b < o.expr.length ? (o.expr[o.b++] = str, and) : or)(o,s)) }
 function equalsTo (value) { return (o,s) => setImmediate(() => (o.rez[0] === value ? and:or)(o,s)) }
